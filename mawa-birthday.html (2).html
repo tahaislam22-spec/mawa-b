@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HAPPY 13TH MAWA 🐱💙</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue: #2E6BFF;
+    --blue-deep: #1531A6;
+    --pink: #FF5DA2;
+    --yellow: #FFD93D;
+    --cream: #FFF7EC;
+    --ink: #14163A;
+    --green: #3DDC84;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background: var(--blue-deep);
+    background-image:
+      radial-gradient(circle at 15% 20%, rgba(255,255,255,0.08) 0, transparent 40%),
+      radial-gradient(circle at 85% 80%, rgba(255,255,255,0.06) 0, transparent 45%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 40px);
+    color: var(--ink);
+    font-family:"Comic Neue", cursive;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  canvas#confetti{ position:fixed; inset:0; pointer-events:none; z-index:999; }
+
+  .float-emoji{
+    position:fixed; font-size:28px; opacity:0.5;
+    animation: drift 14s linear infinite;
+    pointer-events:none; z-index:1; user-select:none;
+  }
+  @keyframes drift{
+    0%{ transform: translateY(110vh) rotate(0deg); }
+    100%{ transform: translateY(-15vh) rotate(360deg); }
+  }
+
+  /* ---- music toggle ---- */
+  .music-btn{
+    position:fixed;
+    top:18px; right:18px;
+    z-index:1000;
+    background:var(--yellow);
+    border:3px solid var(--ink);
+    border-radius:999px;
+    padding:10px 16px;
+    font-family:"Fredoka",sans-serif;
+    font-weight:700;
+    font-size:0.85rem;
+    cursor:pointer;
+    box-shadow:4px 4px 0 var(--ink);
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .music-btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .music-btn .bars{ display:inline-flex; gap:2px; align-items:flex-end; height:12px; }
+  .music-btn .bars span{ width:3px; background:var(--ink); animation:eq 0.8s ease-in-out infinite; }
+  .music-btn .bars span:nth-child(1){ height:40%; animation-delay:0s; }
+  .music-btn .bars span:nth-child(2){ height:100%; animation-delay:0.2s; }
+  .music-btn .bars span:nth-child(3){ height:60%; animation-delay:0.4s; }
+  .music-btn.muted .bars span{ animation-play-state:paused; height:20%; }
+  @keyframes eq{ 0%,100%{ transform:scaleY(0.4);} 50%{ transform:scaleY(1);} }
+
+  header{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; position:relative; padding:40px 20px 80px;
+  }
+
+  .sticker{
+    position:absolute; background:var(--yellow); color:var(--ink);
+    font-family:"Fredoka",sans-serif; font-weight:700; padding:10px 18px;
+    border-radius:999px; border:3px solid var(--ink); box-shadow:5px 5px 0 var(--ink);
+    font-size:15px; z-index:5;
+  }
+  .s1{ top:8%; left:6%; transform:rotate(-14deg); background:var(--pink); color:white;}
+  .s2{ top:14%; right:6%; transform:rotate(10deg);}
+  .s3{ bottom:10%; left:10%; transform:rotate(8deg); background:white;}
+  .s4{ bottom:16%; right:8%; transform:rotate(-10deg); background:var(--pink); color:white;}
+
+  @media (max-width:700px){
+    .s1,.s2,.s3,.s4{ font-size:12px; padding:7px 12px; }
+    .s1{top:5%; left:3%;} .s2{top:9%; right:3%;} .s3{bottom:20%; left:3%;} .s4{bottom:24%; right:3%;}
+  }
+
+  .cat-hero{
+    font-size:110px; display:inline-block;
+    animation: wiggle 3.2s ease-in-out infinite;
+    filter: drop-shadow(6px 6px 0 var(--ink));
+  }
+  @keyframes wiggle{
+    0%,100%{ transform: rotate(-6deg) translateY(0);}
+    50%{ transform: rotate(6deg) translateY(-10px);}
+  }
+
+  h1.title{
+    font-family:"Fredoka",sans-serif; font-weight:700;
+    font-size:clamp(2.6rem, 9vw, 6.5rem); line-height:0.95;
+    color:var(--cream); margin:18px 0 6px;
+    -webkit-text-stroke:3px var(--ink);
+    text-shadow: 6px 6px 0 var(--pink), 12px 12px 0 var(--ink);
+    letter-spacing:1px;
+  }
+  @media (max-width:700px){
+    h1.title{ text-shadow: 4px 4px 0 var(--pink), 8px 8px 0 var(--ink); -webkit-text-stroke:2px var(--ink);}
+  }
+
+  h2.subname{
+    font-family:"Fredoka",sans-serif; font-size:clamp(1.6rem, 5vw, 2.6rem);
+    color:var(--yellow); margin:0 0 26px; transform:rotate(-2deg);
+  }
+
+  .age-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:120px;height:120px; border-radius:50%; background:var(--pink);
+    border:4px solid var(--ink); box-shadow:0 0 0 6px var(--yellow), 8px 8px 0 var(--ink);
+    font-family:"Fredoka",sans-serif; font-weight:700; color:white; font-size:3rem;
+    margin:10px 0 30px; animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1) rotate(-4deg); }
+    50%{ transform:scale(1.06) rotate(4deg); }
+  }
+
+  .scrolldown{
+    font-family:"Fredoka",sans-serif; color:var(--cream); font-size:1rem;
+    opacity:0.85; margin-top:10px; animation: bounce 1.6s infinite;
+  }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(10px);} }
+
+  section{ max-width:900px; margin:0 auto; padding:70px 24px; position:relative; z-index:2; }
+
+  .card-panel{
+    background:var(--cream); border:4px solid var(--ink); border-radius:26px;
+    box-shadow:10px 10px 0 var(--ink); padding:40px clamp(20px,5vw,56px); position:relative;
+  }
+
+  .panel-title{
+    font-family:"Fredoka",sans-serif; font-size:clamp(1.8rem,4.5vw,2.6rem);
+    color:var(--blue-deep); margin:0 0 10px; transform:rotate(-1deg);
+  }
+  .panel-sub{
+    font-size:1.05rem; color:var(--ink); opacity:0.75; margin:0 0 26px;
+  }
+
+  .facts-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  @media (max-width:600px){ .facts-grid{ grid-template-columns:1fr; } }
+
+  .fact{
+    background:white; border:3px solid var(--ink); border-radius:18px; padding:20px;
+    text-align:center; box-shadow:5px 5px 0 var(--ink); transition: transform 0.15s ease;
+  }
+  .fact:nth-child(odd){ transform:rotate(-2deg); }
+  .fact:nth-child(even){ transform:rotate(2deg); }
+  .fact:hover{ transform:scale(1.06) rotate(0deg); }
+  .fact .emoji{ font-size:2.6rem; display:block; margin-bottom:8px; }
+  .fact .label{ font-family:"Fredoka",sans-serif; color:var(--blue-deep); font-size:1.1rem; }
+  .fact .val{ font-weight:700; font-size:1.3rem; }
+
+  .song-widget{
+    margin-top:34px; background:var(--blue); border:3px solid var(--ink); border-radius:18px;
+    padding:18px 22px; display:flex; align-items:center; gap:16px; color:white;
+    box-shadow:5px 5px 0 var(--ink); transform:rotate(1deg); flex-wrap:wrap;
+  }
+  .vinyl{
+    width:56px;height:56px;border-radius:50%;
+    background: repeating-radial-gradient(circle at center, var(--ink) 0 2px, #333 2px 4px);
+    border:3px solid var(--ink); flex-shrink:0; animation: spin 3s linear infinite; position:relative;
+  }
+  .vinyl::after{
+    content:""; position:absolute; top:50%; left:50%; width:14px;height:14px;
+    background:var(--yellow); border-radius:50%; transform:translate(-50%,-50%); border:2px solid var(--ink);
+  }
+  @keyframes spin{ from{transform:rotate(0);} to{transform:rotate(360deg);} }
+  .song-text .now{ font-family:"Fredoka",sans-serif; font-size:0.85rem; opacity:0.85; }
+  .song-text .title{ font-family:"Fredoka",sans-serif; font-size:1.3rem; font-weight:700; }
+  .song-link{
+    margin-left:auto; font-family:"Fredoka",sans-serif; font-size:0.85rem;
+    color:white; background:rgba(0,0,0,0.2); padding:8px 14px; border-radius:999px;
+    text-decoration:none; border:2px solid rgba(255,255,255,0.6);
+  }
+  .song-link:hover{ background:rgba(0,0,0,0.35); }
+
+  /* ---- trials / games ---- */
+  .progress-track{
+    display:flex; gap:10px; justify-content:center; margin-bottom:36px;
+  }
+  .progress-dot{
+    width:36px;height:36px;border-radius:50%;
+    background:white; border:3px solid var(--ink); display:flex;
+    align-items:center; justify-content:center; font-family:"Fredoka",sans-serif;
+    font-weight:700; color:var(--ink); box-shadow:3px 3px 0 var(--ink);
+    transition: all 0.2s ease;
+  }
+  .progress-dot.done{ background:var(--green); }
+  .progress-dot.active{ background:var(--yellow); transform:scale(1.15); }
+
+  .game-card{
+    background:white; border:3px solid var(--ink); border-radius:20px;
+    padding:28px; margin-bottom:24px; box-shadow:6px 6px 0 var(--ink);
+    position:relative; transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .game-card.locked{
+    opacity:0.45; filter:grayscale(0.6); pointer-events:none;
+  }
+  .game-card.done{
+    border-color:var(--green);
+  }
+  .game-title{
+    font-family:"Fredoka",sans-serif; font-size:1.4rem; color:var(--blue-deep);
+    margin:0 0 6px; display:flex; align-items:center; gap:8px;
+  }
+  .game-desc{ margin:0 0 18px; opacity:0.8; }
+  .checkmark{
+    display:none; margin-left:auto; background:var(--green); color:white;
+    border-radius:50%; width:28px;height:28px; align-items:center; justify-content:center;
+    font-weight:700; border:2px solid var(--ink);
+  }
+  .game-card.done .checkmark{ display:flex; }
+
+  /* game 1: cat tap */
+  .tap-zone{ text-align:center; }
+  .tap-cat{
+    font-size:70px; cursor:pointer; user-select:none; display:inline-block;
+    transition: transform 0.06s ease;
+  }
+  .tap-cat:active{ transform:scale(0.85); }
+  .tap-count{
+    font-family:"Fredoka",sans-serif; font-size:1.6rem; color:var(--blue-deep); margin-top:10px;
+  }
+  .bar-outer{
+    background:#eee; border:2px solid var(--ink); border-radius:999px; height:18px;
+    overflow:hidden; margin-top:14px;
+  }
+  .bar-inner{
+    height:100%; background:var(--pink); width:0%; transition:width 0.15s ease;
+  }
+
+  /* game 2: zzz catcher */
+  .zzz-zone{
+    position:relative; height:220px; background:var(--blue-deep); border-radius:16px;
+    border:2px solid var(--ink); overflow:hidden; cursor:pointer;
+  }
+  .zzz-item{
+    position:absolute; font-size:26px; user-select:none; animation: fallz linear forwards;
+  }
+  @keyframes fallz{ from{ transform:translateY(-40px);} to{ transform:translateY(240px);} }
+  .zzz-score{
+    font-family:"Fredoka",sans-serif; font-size:1.6rem; color:var(--blue-deep); margin-top:14px; text-align:center;
+  }
+  .game-btn{
+    font-family:"Fredoka",sans-serif; font-weight:700; background:var(--blue); color:white;
+    border:3px solid var(--ink); border-radius:999px; padding:12px 28px; cursor:pointer;
+    box-shadow:4px 4px 0 var(--ink); margin-top:14px; display:block; margin-left:auto; margin-right:auto;
+  }
+  .game-btn:active{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+
+  /* game 3: quiz */
+  .quiz-q{ font-family:"Fredoka",sans-serif; font-size:1.2rem; margin:16px 0 10px; }
+  .quiz-opts{ display:flex; gap:10px; flex-wrap:wrap; }
+  .quiz-opt{
+    font-family:"Comic Neue",cursive; font-weight:700; background:var(--cream);
+    border:2px solid var(--ink); border-radius:12px; padding:10px 18px; cursor:pointer;
+  }
+  .quiz-opt.correct{ background:var(--green); color:white; }
+  .quiz-opt.wrong{ background:var(--pink); color:white; }
+  .quiz-feedback{ font-family:"Fredoka",sans-serif; margin-top:10px; min-height:1.4em; }
+
+  /* ---- final message (locked) ---- */
+  .message-panel{ background: var(--pink); color:white; transform:rotate(-1deg); }
+  .message-panel .panel-title{ color:white; }
+  .message-body{ font-size:1.15rem; line-height:1.75; font-weight:400; }
+  .signoff{ margin-top:24px; font-family:"Fredoka",sans-serif; font-size:1.3rem; text-align:right; }
+
+  .locked-wall{
+    text-align:center; padding:50px 24px; background:rgba(255,255,255,0.08);
+    border:4px dashed var(--cream); border-radius:26px; color:var(--cream);
+  }
+  .locked-wall .lock-emoji{ font-size:60px; display:block; margin-bottom:12px; }
+  .locked-wall p{ font-family:"Fredoka",sans-serif; font-size:1.2rem; }
+
+  .confetti-btn-wrap{ text-align:center; padding:20px 24px 90px; }
+  .confetti-btn{
+    font-family:"Fredoka",sans-serif; font-weight:700; font-size:1.3rem;
+    background:var(--yellow); color:var(--ink); border:4px solid var(--ink); border-radius:999px;
+    padding:18px 42px; cursor:pointer; box-shadow:6px 6px 0 var(--ink);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .confetti-btn:hover{ transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink); }
+  .confetti-btn:active{ transform:translate(2px,2px); box-shadow:3px 3px 0 var(--ink); }
+  .confetti-btn:focus-visible{ outline:3px solid var(--blue); outline-offset:3px; }
+
+  footer{
+    text-align:center; color:var(--cream); font-family:"Fredoka",sans-serif;
+    padding:20px 20px 60px; opacity:0.85; font-size:0.95rem;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<audio id="bgSong" loop preload="none">
+  <source src="made-in-japan.mp3" type="audio/mpeg">
+</audio>
+<button class="music-btn muted" id="musicBtn">
+  <span class="bars"><span></span><span></span><span></span></span>
+  <span id="musicLabel">play song</span>
+</button>
+
+<span class="float-emoji" style="left:8%; animation-delay:0s;">😴</span>
+<span class="float-emoji" style="left:22%; animation-delay:3s;">🐾</span>
+<span class="float-emoji" style="left:40%; animation-delay:6s;">💙</span>
+<span class="float-emoji" style="left:60%; animation-delay:1.5s;">🎂</span>
+<span class="float-emoji" style="left:75%; animation-delay:4.5s;">🐱</span>
+<span class="float-emoji" style="left:90%; animation-delay:8s;">✨</span>
+
+<header>
+  <div class="sticker s1">certified cat mom</div>
+  <div class="sticker s2">professional napper 😴</div>
+  <div class="sticker s3">blue &gt; every color</div>
+  <div class="sticker s4">made in japan on repeat</div>
+
+  <div class="cat-hero">🐈</div>
+  <h1 class="title">HAPPY<br>BIRTHDAY</h1>
+  <h2 class="subname">it's MAWA's day! 🎉</h2>
+  <div class="age-badge">13</div>
+  <div class="scrolldown">↓ scroll for chaos ↓</div>
+</header>
+
+<section>
+  <div class="card-panel">
+    <h2 class="panel-title">the official Mawa file 📁</h2>
+    <div class="facts-grid">
+      <div class="fact">
+        <span class="emoji">😴</span>
+        <div class="label">hobby</div>
+        <div class="val">sleeping (elite level)</div>
+      </div>
+      <div class="fact">
+        <span class="emoji">💙</span>
+        <div class="label">favorite color</div>
+        <div class="val">blue</div>
+      </div>
+      <div class="fact">
+        <span class="emoji">🐱</span>
+        <div class="label">favorite animal</div>
+        <div class="val">cat</div>
+      </div>
+      <div class="fact">
+        <span class="emoji">🎂</span>
+        <div class="label">now turning</div>
+        <div class="val">13 years old!</div>
+      </div>
+    </div>
+
+    <div class="song-widget">
+      <div class="vinyl"></div>
+      <div class="song-text">
+        <div class="now">now playing on Mawa's brain 24/7</div>
+        <div class="title">Made in Japan 🎶</div>
+      </div>
+      <span class="song-link">▶ hit "play song" top right</span>
+    </div>
+  </div>
+</section>
+
+<section id="trialsSection">
+  <div class="progress-track">
+    <div class="progress-dot active" id="dot1">1</div>
+    <div class="progress-dot" id="dot2">2</div>
+    <div class="progress-dot" id="dot3">3</div>
+  </div>
+
+  <!-- GAME 1: cat tap -->
+  <div class="game-card" id="game1">
+    <h3 class="game-title">🐱 Trial 1: Cat Tap Frenzy <span class="checkmark">✓</span></h3>
+    <p class="game-desc">Tap the cat 20 times before the bar fills. Go go go!</p>
+    <div class="tap-zone">
+      <div class="tap-cat" id="tapCat">🐈</div>
+      <div class="bar-outer"><div class="bar-inner" id="tapBar"></div></div>
+      <div class="tap-count" id="tapCount">0 / 20</div>
+    </div>
+  </div>
+
+  <!-- GAME 2: zzz catcher -->
+  <div class="game-card locked" id="game2">
+    <h3 class="game-title">😴 Trial 2: Zzz Catcher <span class="checkmark">✓</span></h3>
+    <p class="game-desc">Click the falling Zzz's before they hit the bottom. Catch 10 to win.</p>
+    <div class="zzz-zone" id="zzzZone"></div>
+    <div class="zzz-score" id="zzzScore">caught: 0 / 10</div>
+    <button class="game-btn" id="zzzStart">start napping challenge</button>
+  </div>
+
+  <!-- GAME 3: vibe check quiz -->
+  <div class="game-card locked" id="game3">
+    <h3 class="game-title">💙 Trial 3: Vibe Check Quiz <span class="checkmark">✓</span></h3>
+    <p class="game-desc">Prove you know Mawa. Answer all 3 correctly.</p>
+    <div id="quizArea"></div>
+  </div>
+</section>
+
+<section>
+  <div id="lockedWall" class="locked-wall">
+    <span class="lock-emoji">🔒</span>
+    <p>complete all 3 trials above to unlock her birthday message...</p>
+  </div>
+
+  <div class="card-panel message-panel" id="finalMessage" style="display:none;">
+    <h2 class="panel-title">a lil something for you 💌</h2>
+    <p class="message-body">
+      Happy 13th Birthday to my incredible online bestie, Mawa! Even though miles separate us and our friendship exists through screens, late-night texts, and shared laughs, you mean absolute world to me. Watching you step into your official teenage years fills my heart with so much pride and joy; you have the sweetest soul, the brightest energy, and an amazing way of making any ordinary day feel special. Thank you for always being my go-to person, my endless source of laughter, and the truest friend I could ever ask for. I hope your 13th year brings you endless happiness, exciting new adventures, and all the magical moments you deserve — I'm so lucky to have you in my life!
+    </p>
+    <div class="signoff">— your bestie 💙</div>
+  </div>
+</section>
+
+<div class="confetti-btn-wrap">
+  <button class="confetti-btn" id="confettiBtn">🎉 SET OFF CONFETTI 🎉</button>
+</div>
+
+<footer>
+  made with chaos, love, and way too much blue 💙🐱
+</footer>
+
+<script>
+/* ================= confetti canvas (isolated: a failure here must never block the games below) ================= */
+function burst(count){
+  try{
+    if(window.__burst) window.__burst(count);
+  } catch(e){ console.warn('confetti burst skipped:', e); }
+}
+
+(function initConfetti(){
+  try{
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    function resize(){ canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const colors = ['#2E6BFF','#FF5DA2','#FFD93D','#FFF7EC','#14163A'];
+    let particles = [];
+    window.__burst = function(count){
+      for(let i=0;i<count;i++){
+        particles.push({
+          x: Math.random()*canvas.width,
+          y: -20 - Math.random()*canvas.height*0.3,
+          r: 5 + Math.random()*6,
+          vx: (Math.random()-0.5)*3,
+          vy: 2 + Math.random()*3,
+          color: colors[Math.floor(Math.random()*colors.length)],
+          rot: Math.random()*360,
+          vr: (Math.random()-0.5)*10,
+          shape: Math.random() > 0.5 ? 'rect' : 'circle'
+        });
+      }
+    };
+    function animateConfetti(){
+      try{
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{
+          p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+          ctx.save();
+          ctx.translate(p.x,p.y);
+          ctx.rotate(p.rot * Math.PI/180);
+          ctx.fillStyle = p.color;
+          if(p.shape==='rect'){ ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6); }
+          else{ ctx.beginPath(); ctx.arc(0,0,p.r/2,0,Math.PI*2); ctx.fill(); }
+          ctx.restore();
+        });
+        particles = particles.filter(p => p.y < canvas.height + 30);
+      } catch(e){ console.warn('confetti frame skipped:', e); }
+      requestAnimationFrame(animateConfetti);
+    }
+    animateConfetti();
+    window.addEventListener('load', ()=> burst(120));
+  } catch(e){ console.warn('confetti init failed, continuing without it:', e); }
+})();
+
+const confettiBtnEl = document.getElementById('confettiBtn');
+if(confettiBtnEl) confettiBtnEl.addEventListener('click', ()=> burst(180));
+
+/* ================= background song player (isolated) =================
+   Plays whatever mp3 file is sitting next to this HTML file, named
+   "made-in-japan.mp3". Nothing is embedded/copied here — you supply
+   the actual audio file yourself when you save/host the page. */
+(function initMusic(){
+  try{
+    const musicBtn = document.getElementById('musicBtn');
+    const musicLabel = document.getElementById('musicLabel');
+    const audioEl = document.getElementById('bgSong');
+    if(!musicBtn || !audioEl) return;
+
+    let playing = false;
+
+    musicBtn.addEventListener('click', ()=>{
+      try{
+        if(!playing){
+          audioEl.play().then(()=>{
+            playing = true;
+            musicBtn.classList.remove('muted');
+            musicLabel.textContent = 'song playing';
+          }).catch(()=>{
+            musicLabel.textContent = "can't find mp3";
+          });
+        } else {
+          audioEl.pause();
+          playing = false;
+          musicBtn.classList.add('muted');
+          musicLabel.textContent = 'play song';
+        }
+      } catch(e){ console.warn('music toggle failed:', e); }
+    });
+
+    audioEl.addEventListener('error', ()=>{
+      musicLabel.textContent = "add mp3 file";
+    });
+  } catch(e){ console.warn('music init failed, continuing without it:', e); }
+})();
+
+/* ================= trial progress (fully isolated — this is the important part) ================= */
+(function initTrials(){
+const state = { g1:false, g2:false, g3:false };
+
+function updateDots(){
+  document.getElementById('dot1').className = 'progress-dot ' + (state.g1 ? 'done' : 'active');
+  document.getElementById('dot2').className = 'progress-dot ' + (state.g2 ? 'done' : (state.g1 ? 'active' : ''));
+  document.getElementById('dot3').className = 'progress-dot ' + (state.g3 ? 'done' : (state.g1 && state.g2 ? 'active' : ''));
+
+  document.getElementById('game2').classList.toggle('locked', !state.g1);
+  document.getElementById('game3').classList.toggle('locked', !(state.g1 && state.g2));
+
+  document.getElementById('game1').classList.toggle('done', state.g1);
+  document.getElementById('game2').classList.toggle('done', state.g2);
+  document.getElementById('game3').classList.toggle('done', state.g3);
+
+  if(state.g1 && state.g2 && state.g3){
+    document.getElementById('lockedWall').style.display = 'none';
+    const msg = document.getElementById('finalMessage');
+    msg.style.display = 'block';
+    try{ msg.scrollIntoView({behavior:'smooth', block:'center'}); } catch(e){}
+    burst(200);
+  }
+}
+
+/* ---- game 1: cat tap ---- */
+let tapCount = 0;
+const TAP_GOAL = 20;
+document.getElementById('tapCat').addEventListener('click', ()=>{
+  if(state.g1) return;
+  tapCount++;
+  document.getElementById('tapCount').textContent = tapCount + ' / ' + TAP_GOAL;
+  document.getElementById('tapBar').style.width = Math.min(100,(tapCount/TAP_GOAL)*100) + '%';
+  if(tapCount >= TAP_GOAL){
+    state.g1 = true;
+    updateDots();
+  }
+});
+
+/* ---- game 2: zzz catcher ---- */
+let zzzCaught = 0;
+const ZZZ_GOAL = 10;
+let zzzActive = false;
+let zzzSpawnTimer = null;
+
+document.getElementById('zzzStart').addEventListener('click', ()=>{
+  if(state.g2 || zzzActive) return;
+  zzzActive = true;
+  zzzCaught = 0;
+  document.getElementById('zzzScore').textContent = 'caught: 0 / ' + ZZZ_GOAL;
+  document.getElementById('zzzStart').textContent = 'catching...';
+  spawnZzz();
+});
+
+function spawnZzz(){
+  if(!zzzActive) return;
+  const zone = document.getElementById('zzzZone');
+  const item = document.createElement('div');
+  item.className = 'zzz-item';
+  item.textContent = '💤';
+  const dur = 2 + Math.random()*1.5;
+  item.style.left = (Math.random()*85) + '%';
+  item.style.animationDuration = dur + 's';
+  item.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if(!zzzActive) return;
+    zzzCaught++;
+    document.getElementById('zzzScore').textContent = 'caught: ' + zzzCaught + ' / ' + ZZZ_GOAL;
+    item.remove();
+    if(zzzCaught >= ZZZ_GOAL){
+      zzzActive = false;
+      state.g2 = true;
+      document.getElementById('zzzStart').textContent = 'nap champion! 🏆';
+      clearTimeout(zzzSpawnTimer);
+      updateDots();
+    }
+  });
+  item.addEventListener('animationend', ()=> item.remove());
+  zone.appendChild(item);
+  if(zzzActive){
+    zzzSpawnTimer = setTimeout(spawnZzz, 550);
+  }
+}
+
+/* ---- game 3: vibe check quiz ---- */
+const quizQuestions = [
+  { q:"What's Mawa's favorite color?", opts:["Red","Blue","Green"], correct:1 },
+  { q:"Mawa's favorite animal is a...", opts:["Dog","Cat","Bird"], correct:1 },
+  { q:"Mawa's #1 hobby is...", opts:["Running marathons","Sleeping","Cooking"], correct:1 }
+];
+let quizIndex = 0;
+let quizCorrectCount = 0;
+
+function renderQuiz(){
+  const area = document.getElementById('quizArea');
+  if(quizIndex >= quizQuestions.length){
+    area.innerHTML = '<p class="quiz-feedback">you know her so well 💙</p>';
+    state.g3 = true;
+    updateDots();
+    return;
+  }
+  const q = quizQuestions[quizIndex];
+  area.innerHTML = '';
+  const qEl = document.createElement('div');
+  qEl.className = 'quiz-q';
+  qEl.textContent = q.q;
+  area.appendChild(qEl);
+
+  const optsWrap = document.createElement('div');
+  optsWrap.className = 'quiz-opts';
+  q.opts.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'quiz-opt';
+    btn.textContent = opt;
+    btn.addEventListener('click', ()=>{
+      const allBtns = optsWrap.querySelectorAll('.quiz-opt');
+      allBtns.forEach(b=> b.style.pointerEvents = 'none');
+      const feedback = document.createElement('div');
+      feedback.className = 'quiz-feedback';
+      if(i === q.correct){
+        btn.classList.add('correct');
+        feedback.textContent = 'correct! ✅';
+        quizCorrectCount++;
+      } else {
+        btn.classList.add('wrong');
+        allBtns[q.correct].classList.add('correct');
+        feedback.textContent = 'not quite, but moving on!';
+      }
+      area.appendChild(feedback);
+      setTimeout(()=>{
+        quizIndex++;
+        renderQuiz();
+      }, 900);
+    });
+    optsWrap.appendChild(btn);
+  });
+  area.appendChild(optsWrap);
+}
+renderQuiz();
+
+updateDots();
+})();
+</script>
+
+</body>
+</html>
